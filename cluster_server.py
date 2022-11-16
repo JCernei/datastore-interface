@@ -3,7 +3,7 @@ import requests
 import sys
 
 PORT = None
-servers = ['8080', '8081', '8082']
+servers = ['http://server1:8080', 'http://server2:8081', 'http://server3:8082']
 LEADER = False
 container = {}
 
@@ -16,9 +16,9 @@ def retrieve(id):
         return Response(status=404)
     if LEADER:
         for server in servers:
-            if server == PORT:
+            if server.endswith('8080'):
                 continue
-            r = requests.get(f'http://127.0.0.1:{server}/{id}')
+            r = requests.get(f'{server}/{id}')
     return container[id]
 
 
@@ -31,9 +31,9 @@ def create():
     container[content['id']] = content
     if LEADER:
         for server in servers:
-            if server == PORT:
+            if server.endswith('8080'):
                 continue
-            r = requests.post(f'http://127.0.0.1:{server}/', json=content)
+            r = requests.post(server, json=content)
     return container[content['id']]
 
 
@@ -46,10 +46,10 @@ def update(id):
     container[id] = content
     if LEADER:
         for server in servers:
-            if server == PORT:
+            if server.endswith('8080'):
                 continue
             r = requests.put(
-                f'http://127.0.0.1:{server}/{id}', json=content)
+                f'{server}/{id}', json=content)
     return container[id]
 
 
@@ -62,10 +62,10 @@ def delte(id):
     del container[id]
     if LEADER:
         for server in servers:
-            if server == PORT:
+            if server.endswith('8080'):
                 continue
             r = requests.delete(
-                f'http://127.0.0.1:{server}/{id}')
+                f'{server}/{id}')
 
     return content
 
@@ -75,4 +75,4 @@ if __name__ == '__main__':
     if PORT == '8080':
         LEADER = True
 
-    cluster_server.run(host='127.0.0.1', port=PORT, debug=True)
+    cluster_server.run(host='0.0.0.0', port=PORT, debug=True)
