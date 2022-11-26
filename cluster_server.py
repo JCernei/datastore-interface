@@ -63,7 +63,7 @@ def get_local(id):
 def get(id):
     if LEADER:
         cluster_server.logger.info(
-            f'EXTERNAL request from client to lider port:{PORT}')
+            f'EXTERNAL request from client to leader port:{PORT}')
         return get_on_server(id)
     else:
         cluster_server.logger.info(
@@ -103,7 +103,7 @@ def post():
     content = request.json
     if LEADER:
         cluster_server.logger.info(
-            f'EXTERNAL request from client to lider port:{PORT}')
+            f'EXTERNAL request from client to leader port:{PORT}')
 
         contetn_id = {"id": f"{generate_id()}"}
         content.update(contetn_id)
@@ -143,7 +143,7 @@ def put(id):
     content.update(contetn_id)
     if LEADER:
         cluster_server.logger.info(
-            f'EXTERNAL request from client to lider port:{PORT}')
+            f'EXTERNAL request from client to leader port:{PORT}')
         return put_on_server(id, content)
     else:
         cluster_server.logger.info(
@@ -177,7 +177,7 @@ def delete_local(id):
 def delte(id):
     if LEADER:
         cluster_server.logger.info(
-            f'EXTERNAL request from client to lider port:{PORT}')
+            f'EXTERNAL request from client to leader port:{PORT}')
         return delete_on_server(id)
     else:
         cluster_server.logger.info(
