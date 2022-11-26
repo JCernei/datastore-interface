@@ -1,16 +1,16 @@
 version: '3'
 
 services:
-  # server1:
-  #   networks:
-  #     - app
-  #     - default
-  #   build: .
-  #   ports:
-  #     - 8080:8080
-  #   environment:
-  #     PORT: 8080
-  #   command: python3 cluster_server.py 8080
+  server1:
+    networks:
+      - app
+      - default
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      PORT: 8080
+    command: python3 cluster_server.py 8080
 
   server2:
     networks:
